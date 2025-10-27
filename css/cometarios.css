@@ -1,0 +1,41 @@
+  /* Estilos específicos para o carrossel */
+  .carrossel-container {
+    position: relative;
+  }
+  
+  .carrossel-track {
+    display: flex;
+  }
+  
+  .carrossel-slide {
+    flex: 0 0 auto;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  /* Desktop: mostra 3 cards */
+  @media (min-width: 768px) {
+    .carrossel-slide {
+      min-width: calc(33.333% - 2rem);
+    }
+  }
+  
+  /* Mobile: mostra 1 card */
+  @media (max-width: 767px) {
+    .carrossel-slide {
+      min-width: 100%;
+    }
+  }
+  
+  .carrossel-dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #374151;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .carrossel-dots .dot.active {
+    background: #f59e0b;
+    transform: scale(1.2);
+  }

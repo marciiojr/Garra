@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Garra Centro Automotivo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ======== ESTILOS GERAIS ======== */
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: "Poppins", sans-serif;
+      overflow-x: hidden;
+    }
+
+    .servicos-section {
+      position: relative;
+      background: radial-gradient(circle at bottom left, #f7c70015, #000 70%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* ======== BANNER SCROLLANDO ======== */
+    .scroll-banner {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      background: linear-gradient(90deg, #f7c700, #ffb700);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .scroll-banner span {
+      display: inline-block;
+      padding: 1rem 2rem;
+      font-weight: 600;
+      color: #000;
+      animation: scrollText 15s linear infinite;
+    }
+
+    @keyframes scrollText {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ======== TÍTULOS ======== */
+    .titulo-secundario {
+      font-size: 0.9rem;
+      color: #f7c700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .titulo-principal {
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    /* ======== CARDS ======== */
+    .cards-container {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+
+    .card {
+      background: #111;
+      border-radius: 1rem;
+      overflow: hidden;
+      width: 280px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: transform 0.6s ease, opacity 0.6s ease, box-shadow 0.3s ease;
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      padding: 1rem;
+      background: #1b1b1b;
+      font-size: 1rem;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(247, 199, 0, 0.3);
+    }
+
+    /* ======== BOTÃO ======== */
+    .botao-whatsapp {
+      background: #25d366;
+      color: #000;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      display: inline-block;
+    }
+
+    .botao-whatsapp:hover {
+      box-shadow: 0 0 25px #25d366;
+      transform: scale(1.05);
+    }
+
+    /* Gradiente escuro no elemento, não na imagem */
+    .hero-gradient {
+      background: linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0.5) 70%, transparent 100%);
+    }
+    
+    /* Mobile: gradiente vai para baixo */
+    @media (max-width: 768px) {
+      .hero-gradient {
+        background: linear-gradient(0deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.5) 60%, transparent 100%);
+      }
+    }
+
+    /* Efeito de brilho pulsante apenas em parte do botão */
+    .btn-pulse {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-pulse::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: all 0.6s;
+      animation: pulse-shine 2s infinite;
+    }
+    
+    @keyframes pulse-shine {
+      0% { left: -100%; }
+      20% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    /* Suavização da entrada */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fadeInUp { animation: fadeInUp 1s ease-out forwards; }
+    
+    /* Animação para elementos específicos com delay */
+    .fadeInUp.delay-1 { animation-delay: 0.2s; }
+    .fadeInUp.delay-2 { animation-delay: 0.4s; }
+    .fadeInUp.delay-3 { animation-delay: 0.6s; }
+
+    /* Seções */
+    .section-padding {
+      padding: 5rem 1rem;
+    }
+
+    .bg-dark-gray {
+      background-color: #111;
+    }
+
+    .bg-darker-gray {
+      background-color: #0a0a0a;
+    }
+
+    .icone-destaque {
+      background-color: #1b1b1b;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 1.5rem;
+    }
+
+    .card-servico {
+      background: #1b1b1b;
+      border-radius: 1rem;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .card-servico:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(247, 199, 0, 0.2);
+    }
+
+    .card-servico h3 {
+      color: #f7c700;
+      margin-bottom: 1rem;
+    }
+
+    .card-servico ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-servico li {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .card-servico li::before {
+      content: "🔹";
+      margin-right: 0.5rem;
+    }
+
+    .avaliacao {
+      background: #1b1b1b;
+      border-radius: 1rem;
+      padding: 2rem;
+      margin: 1rem;
+    }
+
+    .estrelas {
+      color: #f7c700;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .whatsapp-fixo {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 100;
+      background: #25d366;
+      color: #000;
+      padding: 1rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .whatsapp-fixo:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+    }
+
+    /* Logo da loja */
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    
+    .logo {
+      max-width: 200px;
+      height: auto;
+    }
+    
+    /* Ajustes para mobile */
+    @media (max-width: 768px) {
+      .hero-content {
+        text-align: center;
+        padding-top: 2rem;
+      }
+      
+      .titulo-principal {
+        font-size: 1.8rem;
+        line-height: 1.2;
+      }
+      
+      .logo {
+        max-width: 150px;
+      }
+      
+      .hero-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .hero-icons {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body class="bg-black text-white overflow-x-hidden">
+
+  <!-- HERO -->
+  <section class="relative w-full min-h-screen flex items-center justify-center md:justify-start">
+    
+    <!-- Imagem de fundo -->
+    <div class="absolute inset-0 z-0">
+      <img src="mecanico-de-automoveis-verificando-oleo-no-motor-carro-enquanto-trabalhava-na-oficina-de-reparacao-de-automoveis.jpg"
+           alt="Retífica de motor" 
+           class="w-full h-full object-cover">
+    </div>
+    
+    <!-- Overlay gradiente -->
+    <div class="absolute inset-0 z-10 hero-gradient"></div>
+
+    <!-- Conteúdo -->
+    <div class="relative z-20 w-full max-w-7xl mx-auto px-4 md:px-8 py-16">
+      <div class="hero-content">
+        
+        <!-- Logo da loja -->
+        <div class="logo-container fadeInUp">
+          <div class="logo p-4 rounded-full">
+            <img src="/assets/img/logo_garra.png" alt="Garra Centro Automotivo Logo" class="w-full h-auto">
+          </div>
+        </div>
+
+        <!-- Slogan -->
+        <p class="text-sm md:text-base tracking-widest text-yellow-400 uppercase mb-4 fadeInUp delay-1 text-center md:text-left">
+          🚗 Evite prejuízos no seu carro com uma manutenção de confiança!
+        </p>
+
+        <!-- Título -->
+        <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-6 fadeInUp delay-1 text-center md:text-left">
+          Avaliação gratuita e atendimento especializado em<br class="hidden md:block">
+          <span class="text-yellow-500">câmbio automático, remap, pneus e revisão geral</span>
+        </h1>
+
+        <!-- Ícones rápidos -->
+        <div class="flex flex-wrap gap-2 md:gap-4 mb-8 fadeInUp delay-2 hero-icons">
+          <span class="bg-yellow-500/20 text-yellow-400 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm">Câmbio automático</span>
+          <span class="bg-yellow-500/20 text-yellow-400 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm">Remap</span>
+          <span class="bg-yellow-500/20 text-yellow-400 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm">Pneus</span>
+          <span class="bg-yellow-500/20 text-yellow-400 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm">Suspensão</span>
+        </div>
+
+        <!-- Avatares -->
+        <div class="flex items-center justify-center md:justify-start mb-6 fadeInUp delay-2">
+          <div class="flex -space-x-2 mr-3">
+            <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-yellow-500 border-2 border-black flex items-center justify-center">
+              <span class="text-black font-bold text-xs">M1</span>
+            </div>
+            <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-yellow-500 border-2 border-black flex items-center justify-center">
+              <span class="text-black font-bold text-xs">M2</span>
+            </div>
+            <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-yellow-500 border-2 border-black flex items-center justify-center">
+              <span class="text-black font-bold text-xs">M3</span>
+            </div>
+          </div>
+          <span class="text-sm text-gray-300">+15 especialistas</span>
+        </div>
+
+        <!-- Texto -->
+        <div class="mb-8 fadeInUp delay-2">
+          <p class="text-gray-300 mb-4 text-base md:text-lg text-center md:text-left">
+            <span class="text-yellow-500 font-semibold">Mais de 20 anos de experiência</span> resolvendo problemas de motor e direção, com garantia de até <span class="text-yellow-500 font-semibold">1 ano!</span>
+          </p>
+          </div>
+
+        <!-- Botão WhatsApp -->
+        <div class="fadeInUp delay-3 hero-buttons">
+          <a href="https://wa.me/5585988888888"
+             class="btn-pulse bg-green-600 hover:bg-green-700 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-bold inline-flex items-center gap-3 transition-all duration-300 transform hover:scale-105 shadow-lg w-full md:w-auto justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" class="w-5 h-5 md:w-6 md:h-6">
+              <path d="M13.601 2.326a7.75 7.75 0 0 0-12.14 8.977L.5 15.5l4.317-1.126a7.75 7.75 0 0 0 8.784-12.048zM8 14.5a6.5 6.5 0 0 1-3.316-.896l-.236-.139-2.556.667.683-2.489-.154-.243A6.5 6.5 0 1 1 8 14.5z"/>
+              <path d="M11.168 9.354c-.186-.093-1.097-.541-1.268-.602-.17-.062-.295-.093-.42.093-.124.186-.481.602-.59.727-.108.124-.217.139-.403.046-.186-.093-.786-.289-1.497-.921-.553-.493-.926-1.104-1.036-1.29-.108-.186-.012-.287.081-.38.083-.082.186-.217.278-.326.093-.108.124-.186.186-.31.062-.124.031-.233-.015-.326-.046-.093-.42-1.015-.575-1.39-.152-.364-.307-.314-.42-.32h-.36c-.108 0-.28.04-.429.186-.147.148-.564.552-.564 1.347 0 .795.578 1.563.659 1.67.081.108 1.137 1.737 2.757 2.433.385.166.684.266.917.34.385.122.735.105 1.011.064.309-.046.946-.387 1.081-.761.133-.372.133-.692.093-.76-.04-.066-.17-.105-.356-.198z"/>
+            </svg>
+            <span class="text-sm md:text-base"> Fale conosco pelo Whatsapp</span>
+          </a>
+          
+          <p class="text-gray-400 text-xs md:text-sm mt-3 text-center md:text-left">Resposta em até 5 minutos</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNER SCROLL -->
+  <section class="servicos-section h-10">
+    <div class="scroll-banner">
+      <span>Caixa de direção • Cabeçote • Retífica completa • O Cara da Retífica •</span>
+      <span>Caixa de direção • Cabeçote • Retífica completa • O Cara da Retífica •</span>
+      <span>Caixa de direção • Cabeçote • Retífica completa • O Cara da Retífica •</span>
+      <span>Caixa de direção • Cabeçote • Retífica completa • O Cara da Retífica •</span>
+      <span>Caixa de direção • Cabeçote • Retífica completa • O Cara da Retífica •</span>
+    </div>
+
+    <div class="servicos-container">
+      <h3 class="titulo-secundario">🚗 Nossas Especialidades</h3>
+      <h2 class="titulo-principal">Nossos Serviços Mais Procurados</h2>
+
+      <div class="cards-container">
+        <div class="card">
+          <img src="https://cdn.pixabay.com/photo/2017/10/10/21/49/gear-2837485_1280.jpg" alt="Caixa de direção" />
+          <h3>Retífica de Caixa de Direção</h3>
+        </div>
+
+        <div class="card">
+          <img src="https://cdn.pixabay.com/photo/2016/10/25/12/28/engine-1769624_1280.jpg" alt="Cabeçote" />
+          <h3>Retífica de Cabeçote</h3>
+        </div>
+
+        <div class="card">
+          <img src="https://cdn.pixabay.com/photo/2016/04/06/16/12/car-repair-1315942_1280.jpg" alt="Serviço Mecânico" />
+          <h3>Serviço Mecânico Completo</h3>
+        </div>
+      </div>
+
+      <a href="https://wa.me/5585988888888" class="botao-whatsapp">💬 Fazer Orçamento Imediato</a>
+    </div>
+  </section>
+
+  <!-- SOBRE A GARRA -->
+  <section class="section-padding bg-dark-gray">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <h3 class="titulo-secundario">Sobre Nós</h3>
+        <h2 class="titulo-principal">Conheça a Garra Centro Automotivo</h2>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div>
+          <p class="text-lg text-gray-300 mb-6">
+            Na <span class="text-yellow-500 font-semibold">Garra Centro Automotivo</span>, trabalhamos com equipamentos de última geração e profissionais qualificados para cuidar do seu veículo com total segurança e transparência.
+          </p>
+          <p class="text-lg text-gray-300 mb-8">
+            Realizamos diagnóstico completo, manutenção preventiva e corretiva, sempre com foco em qualidade, tecnologia e atendimento personalizado.
+          </p>
+          
+          <div class="grid grid-cols-2 gap-4">
+            <div class="flex items-center">
+              <div class="icone-destaque">🔧</div>
+              <span class="ml-2 text-sm md:text-base">Equipamentos modernos</span>
+            </div>
+            <div class="flex items-center">
+              <div class="icone-destaque">⚙</div>
+              <span class="ml-2 text-sm md:text-base">Troca de fluido de câmbio</span>
+            </div>
+            <div class="flex items-center">
+              <div class="icone-destaque">🛞</div>
+              <span class="ml-2 text-sm md:text-base">Pneus e balanceamento</span>
+            </div>
+            <div class="flex items-center">
+              <div class="icone-destaque">📏</div>
+              <span class="ml-2 text-sm md:text-base">Alinhamento 3D com 4 câmeras</span>
+            </div>
+            <div class="flex items-center">
+              <div class="icone-destaque">🧰</div>
+              <span class="ml-2 text-sm md:text-base">Freios e escapamentos</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="rounded-xl overflow-hidden">
+          <img src="https://cdn.pixabay.com/photo/2016/11/23/17/24/automobile-1853936_1280.jpg" alt="Oficina moderna" class="w-full h-auto object-cover">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOSSOS SERVIÇOS -->
+  <section class="section-padding bg-darker-gray">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <h3 class="titulo-secundario">Serviços</h3>
+        <h2 class="titulo-principal">Nossos Serviços Especializados</h2>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Câmbio Automático -->
+        <div class="card-servico">
+          <h3>Câmbio Automático</h3>
+          <p class="text-gray-300 mb-4">
+            <span class="text-yellow-500 font-semibold">💰 Evite prejuízos de até R$20.000 no seu câmbio automático.</span>
+            Faça a troca preventiva do fluido e garanta o desempenho do seu carro.
+          </p>
+          <ul>
+            <li>Avaliação gratuita</li>
+            <li>Equipamentos de precisão</li>
+            <li>Profissionais certificados</li>
+          </ul>
+          <a href="https://wa.me/5585988888888?text=Olá! Gostaria de agendar uma avaliação do meu câmbio automático" class="botao-whatsapp w-full text-center">Avaliar meu câmbio agora</a>
+        </div>
+        
+        <!-- Remap de Potência -->
+        <div class="card-servico">
+          <h3>Remap de Potência</h3>
+          <p class="text-gray-300 mb-4">
+            <span class="text-yellow-500 font-semibold">⚡ Sinta seu carro mais leve e potente.</span>
+            Ganhe torque, economia e resposta rápida no acelerador com o remapeamento eletrônico (com aferição em dinamômetro).
+          </p>
+          <ul>
+            <li>Mais desempenho</li>
+            <li>Menor consumo</li>
+            <li>Ajuste seguro</li>
+          </ul>
+          <a href="https://wa.me/5585988888888?text=Olá! Gostaria de agendar um remap no meu veículo" class="botao-whatsapp w-full text-center">Agendar remap</a>
+        </div>
+        
+        <!-- Manutenção Preventiva -->
+        <div class="card-servico">
+          <h3>Manutenção Preventiva</h3>
+          <p class="text-gray-300 mb-4">
+            <span class="text-yellow-500 font-semibold">⏱ Evite surpresas e gastos altos.</span>
+            Nossa revisão completa identifica problemas antes que virem prejuízo.
+          </p>
+          <ul>
+            <li>Checagem de freios, suspensão e injeção eletrônica</li>
+            <li>Revisão antes de viagens</li>
+            <li>Clareza e transparência total</li>
+          </ul>
+          <a href="https://wa.me/5585988888888?text=Olá! Gostaria de agendar uma revisão completa no meu veículo" class="botao-whatsapp w-full text-center">Agendar revisão completa</a>
+        </div>
+        
+        <!-- Troca de Óleo e Pneus -->
+        <div class="card-servico">
+          <h3>Troca de Óleo e Pneus</h3>
+          <p class="text-gray-300 mb-4">
+            <span class="text-yellow-500 font-semibold">🛞 Troque seu óleo e pneus com quem entende.</span>
+            Trabalhamos com as melhores marcas, garantindo segurança e durabilidade.
+          </p>
+          <ul>
+            <li>Óleos originais e filtros de qualidade</li>
+            <li>Pneus novos com garantia</li>
+            <li>Troca rápida e balanceamento</li>
+          </ul>
+          <a href="https://wa.me/5585988888888?text=Olá! Gostaria de uma cotação para troca de óleo/pneus" class="botao-whatsapp w-full text-center">Solicitar cotação no WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POR QUE ESCOLHER A GARRA -->
+  <section class="section-padding bg-dark-gray">
+    <div class="max-w-6xl mx-auto text-center">
+      <h3 class="titulo-secundario">Diferenciais</h3>
+      <h2 class="titulo-principal">Por que escolher a Garra</h2>
+      
+      <p class="text-lg text-gray-300 max-w-3xl mx-auto mb-12">
+        🚗 Aqui, seu carro é tratado com tecnologia e precisão.
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div class="flex flex-col items-center">
+          <div class="icone-destaque">🔧</div>
+          <p class="font-semibold text-sm md:text-base">Equipamentos de diagnóstico avançado</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="icone-destaque">📏</div>
+          <p class="font-semibold text-sm md:text-base">Alinhamento 3D com 4 câmeras</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="icone-destaque">⚡</div>
+          <p class="font-semibold text-sm md:text-base">Atendimento transparente e rápido</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="icone-destaque">👨‍🔧</div>
+          <p class="font-semibold text-sm md:text-base">Técnicos experientes e certificados</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="icone-destaque">📍</div>
+          <p class="font-semibold text-sm md:text-base">Localização fácil em Fortaleza - CE</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÕES DE CLIENTES -->
+  <section class="section-padding bg-darker-gray">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <h3 class="titulo-secundario">Avaliações</h3>
+        <h2 class="titulo-principal">O que nossos clientes dizem</h2>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="avaliacao">
+          <div class="estrelas">⭐⭐⭐⭐⭐</div>
+          <p class="text-gray-300 mb-4">
+            "Atendimento excelente, resolveram o problema do câmbio do meu carro com rapidez e explicaram tudo!"
+          </p>
+          <p class="text-yellow-500 font-semibold">— João P., Fortaleza</p>
+        </div>
+        
+        <div class="avaliacao">
+          <div class="estrelas">⭐⭐⭐⭐⭐</div>
+          <p class="text-gray-300 mb-4">
+            "Oficina moderna, muito diferente das tradicionais. Super recomendo!"
+          </p>
+          <p class="text-yellow-500 font-semibold">— Rafael S.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAMADA FINAL -->
+  <section class="section-padding bg-dark-gray">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6">🧰 Quer evitar prejuízo e rodar com segurança?</h2>
+      <p class="text-lg text-gray-300 mb-8">
+        Clique no botão abaixo e fale diretamente com nossa equipe no WhatsApp.
+      </p>
+      <a href="https://wa.me/5585988888888" class="botao-whatsapp text-base md:text-lg px-8 md:px-10 py-3 md:py-4">💬 Falar com a Garra no WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- LOCALIZAÇÃO -->
+  <section class="section-padding bg-darker-gray">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <h3 class="titulo-secundario">Localização</h3>
+        <h2 class="titulo-principal">Venha nos visitar</h2>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <p class="text-lg text-gray-300 mb-6 flex items-start">
+            <svg class="w-6 h-6 text-yellow-500 mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+            </svg>
+            <span>📍 Av. General Osório de Paiva, 3109 fundos C, Fortaleza – CE</span>
+          </p>
+          
+          <a href="https://maps.google.com/?q=Av.+General+Osório+de+Paiva,+3109+fundos+C,+Fortaleza+CE" 
+             class="botao-whatsapp inline-block mt-4">
+            🗺️ Traçar rota no Google Maps
+          </a>
+        </div>
+        
+        <div class="rounded-xl overflow-hidden h-64">
+          <!-- Mapa placeholder - substituir por iframe do Google Maps -->
+          <div class="w-full h-full bg-gray-800 flex items-center justify-center">
+            <p class="text-gray-400">Mapa da localização</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHATSAPP FIXO -->
+  <a href="https://wa.me/5585988888888" class="whatsapp-fixo">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" class="w-6 h-6">
+      <path d="M13.601 2.326a7.75 7.75 0 0 0-12.14 8.977L.5 15.5l4.317-1.126a7.75 7.75 0 0 0 8.784-12.048zM8 14.5a6.5 6.5 0 0 1-3.316-.896l-.236-.139-2.556.667.683-2.489-.154-.243A6.5 6.5 0 1 1 8 14.5z"/>
+      <path d="M11.168 9.354c-.186-.093-1.097-.541-1.268-.602-.17-.062-.295-.093-.42.093-.124.186-.481.602-.59.727-.108.124-.217.139-.403.046-.186-.093-.786-.289-1.497-.921-.553-.493-.926-1.104-1.036-1.29-.108-.186-.012-.287.081-.38.083-.082.186-.217.278-.326.093-.108.124-.186.186-.31.062-.124.031-.233-.015-.326-.046-.093-.42-1.015-.575-1.39-.152-.364-.307-.314-.42-.32h-.36c-.108 0-.28.04-.429.186-.147.148-.564.552-.564 1.347 0 .795.578 1.563.659 1.67.081.108 1.137 1.737 2.757 2.433.385.166.684.266.917.34.385.122.735.105 1.011.064.309-.046.946-.387 1.081-.761.133-.372.133-.692.093-.76-.04-.066-.17-.105-.356-.198z"/>
+    </svg>
+    <span class="hidden md:inline">Falar com a Garra</span>
+  </a>
+
+  <script>
+    // Efeito de entrada suave dos cards ao rolar
+    const cards = document.querySelectorAll(".card");
+
+    window.addEventListener("scroll", () => {
+      cards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          card.style.opacity = "1";
+          card.style.transform = "translateY(0)";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
